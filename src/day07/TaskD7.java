@@ -25,13 +25,15 @@ public class TaskD7 {
 	public int sizes() {
 		fillDirectories();
 		for (Directory d : directories) {
+			for (Directory d1 : d.getDirectories())
+				totalSizes += d1.getSize();
 //			System.out.println(d);
 			int size = d.getSize();
-			if (size <= maxSize) {
+//			if (size <= maxSize) {
 				System.out.println(d.getName() + ": " + size);
 				
 				totalSizes += size;
-			}
+//			}
 		}
 		
 		return totalSizes;

@@ -10,11 +10,12 @@ import day04.TaskD4;
 import day05.TaskD5;
 import day06.TaskD6;
 import day07.TaskD7;
+import day08.TaskD8;
 
 public class ReadFiles {
 
-	private static int dayNum = 7;
-	private static int taskNum = 1;
+	private static int dayNum = 8;
+	private static int taskNum = 2;
 	private String file;
 
 	TaskD1 d1 = new TaskD1();
@@ -24,6 +25,7 @@ public class ReadFiles {
 	TaskD5 d5 = new TaskD5();
 	TaskD6 d6 = new TaskD6();
 	TaskD7 d7 = new TaskD7();
+	TaskD8 d8 = new TaskD8();
 
 	public ReadFiles() {
 		this.file = "res/input" + dayNum + ".txt";
@@ -69,6 +71,8 @@ public class ReadFiles {
 					return this.d6.findIndex(line, taskNum);
 				case 7:
 					this.d7.isCommand(line);
+				case 8, 108:
+					this.d8.readMap(line);
 				}
 
 			}
@@ -88,6 +92,8 @@ public class ReadFiles {
 				return this.d5.getTopCrates();
 			case 7:
 				return this.d7.sizes();
+			case 8:
+				return this.d8.countVisibleTrees(taskNum);
 			}
 		} catch (Exception e) {
 			System.out.println("An error occurred.");
