@@ -1,0 +1,28 @@
+### eclipse logs ###
+*/logs/
+logs/
+/logs/
+!spec/*.logs
+logs*
+
+### eclipse generic ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# Eclipse Core      
+.project
+
+# JDT-specific (Eclipse Java Development Tools)     
+.classpath
+
+### idea intellij ###
+.idea/
