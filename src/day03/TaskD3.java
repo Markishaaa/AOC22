@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class TaskD3 {
+import utils.Task;
+
+public class TaskD3 implements Task {
 
 	private List<String> group;
 	private int sum;
@@ -13,23 +15,6 @@ public class TaskD3 {
 	public TaskD3() {
 		this.group = new ArrayList<>();
 		this.sum = 0;
-	}
-
-	public void findCommonBadges(String line) {
-		group.add(line);
-
-		if (group.size() % 3 == 0) {
-
-			Set<Character> commonChars = convertStringToSetOfChars(group.get(0));
-			group.stream().skip(1).forEach(s -> commonChars.retainAll(convertStringToSetOfChars(s)));
-
-			for (char c : commonChars) {
-				sum += Character.isUpperCase(c) ? (int) c - 38 : (int) c - 96;
-			}
-
-			group.clear();
-		}
-
 	}
 
 	private static Set<Character> convertStringToSetOfChars(String string) {
@@ -41,8 +26,9 @@ public class TaskD3 {
 		return set;
 	}
 
-	public void findCommonChars(String line) {
-
+	// Finds common characters
+	@Override
+	public void task1(String line) {
 		int mid = line.length() / 2;
 		String[] compartments = { line.substring(0, mid), line.substring(mid) };
 
@@ -65,7 +51,26 @@ public class TaskD3 {
 		}
 	}
 
-	public int getSum() {
+	// Finds common badges
+	@Override
+	public void task2(String line) {
+		group.add(line);
+
+		if (group.size() % 3 == 0) {
+
+			Set<Character> commonChars = convertStringToSetOfChars(group.get(0));
+			group.stream().skip(1).forEach(s -> commonChars.retainAll(convertStringToSetOfChars(s)));
+
+			for (char c : commonChars) {
+				sum += Character.isUpperCase(c) ? (int) c - 38 : (int) c - 96;
+			}
+
+			group.clear();
+		}
+	}
+
+	@Override
+	public Object getResult(int task) {
 		return sum;
 	}
 

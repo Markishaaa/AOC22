@@ -1,6 +1,8 @@
 package day08;
 
-public class TaskD8 {
+import utils.Task;
+
+public class TaskD8 implements Task {
 
 	private int[][] map;
 
@@ -25,16 +27,6 @@ public class TaskD8 {
 		row++;
 	}
 
-	public int countVisibleTrees(int task) {
-		int ans = 0;
-		if (task == 1)
-			ans = task1();
-		else if (task == 2)
-			ans = task2();
-
-		return ans;
-	}
-	
 	private int task1() {
 		int count = 0;
 
@@ -127,6 +119,29 @@ public class TaskD8 {
 		}
 
 		return true;
+	}
+
+	@Override
+	public void task1(String line) {
+		readMap(line);
+	}
+
+	@Override
+	public void task2(String line) {
+		readMap(line);
+	}
+
+	
+	// Counts visible trees;
+	@Override
+	public Object getResult(int task) {
+		int ans = 0;
+		if (task == 1)
+			ans = task1();
+		else if (task == 2)
+			ans = task2();
+
+		return ans;
 	}
 
 }

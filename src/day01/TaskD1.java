@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TaskD1 {
+import utils.Task;
+
+public class TaskD1 implements Task {
 
 	private int most;
 	private int current;
@@ -16,7 +18,8 @@ public class TaskD1 {
 		this.calories = new ArrayList<>();
 	}
 
-	public void task(String data) {
+	@Override
+	public void task1(String data) {
 		if (data.isEmpty() || data.isBlank()) {
 			if (most < current) {
 				most = current;
@@ -28,8 +31,15 @@ public class TaskD1 {
 		}
 	}
 
-	public int getAnswer(int task) {
-		if (task == 1) return most;
+	@Override
+	public void task2(String data) {
+		task1(data);
+	}
+
+	@Override
+	public Object getResult(int task) {
+		if (task == 1)
+			return most;
 
 		return calories.stream().sorted(Collections.reverseOrder()).limit(3).reduce(0, Integer::sum);
 	}

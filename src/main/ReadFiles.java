@@ -3,33 +3,26 @@ package main;
 import java.io.File;
 import java.util.Scanner;
 
-import day01.TaskD1;
-import day02.TaskD2;
-import day03.TaskD3;
-import day04.TaskD4;
-import day05.TaskD5;
-import day06.TaskD6;
-import day07.TaskD7;
-import day08.TaskD8;
+import utils.Days;
+import utils.Task;
 
 public class ReadFiles {
 
+	private static boolean test = false;
 	private static int dayNum = 8;
 	private static int taskNum = 2;
+	
 	private String file;
 
-	TaskD1 d1 = new TaskD1();
-	TaskD2 d2 = new TaskD2();
-	TaskD3 d3 = new TaskD3();
-	TaskD4 d4 = new TaskD4();
-	TaskD5 d5 = new TaskD5();
-	TaskD6 d6 = new TaskD6();
-	TaskD7 d7 = new TaskD7();
-	TaskD8 d8 = new TaskD8();
+	Task d;
 
 	public ReadFiles() {
-		this.file = "res/input" + dayNum + ".txt";
-//		this.file = "res/input-test.txt";
+		if (test)
+			this.file = "res/input-test.txt";
+		else
+			this.file = "res/input" + dayNum + ".txt";
+		
+		this.d = Days.valueOf("DAY" + dayNum).createTask();
 	}
 
 	private Object readFile() {
@@ -41,60 +34,19 @@ public class ReadFiles {
 			while (myReader.hasNextLine()) {
 				String line = myReader.nextLine();
 
-				int multiplier = taskNum == 1 ? 0 : 100;
-				switch (dayNum + multiplier) {
-				case 1, 101:
-					this.d1.task(line);
+				switch(taskNum) {
+				case 1:
+					d.task1(line);
 					break;
 				case 2:
-					this.d2.taskOne(line);
-					break;
-				case 102:
-					this.d2.taskTwo(line);
-					break;
-				case 3:
-					this.d3.findCommonChars(line);
-					break;
-				case 103:
-					this.d3.findCommonBadges(line);
-					break;
-				case 4:
-					this.d4.findContains(line);
-					break;
-				case 104:
-					this.d4.findOverlaps(line);
-					break;
-				case 5, 105:
-					this.d5.moveCrates(line, taskNum);
-					break;
-				case 6, 106:
-					return this.d6.findIndex(line, taskNum);
-				case 7:
-					this.d7.isCommand(line);
-				case 8, 108:
-					this.d8.readMap(line);
+					d.task2(line);
 				}
-
 			}
 
 			myReader.close();
 
-			switch (dayNum) {
-			case 1:
-				return this.d1.getAnswer(taskNum);
-			case 2:
-				return this.d2.getScore();
-			case 3:
-				return this.d3.getSum();
-			case 4:
-				return this.d4.getCount();
-			case 5:
-				return this.d5.getTopCrates();
-			case 7:
-				return this.d7.sizes();
-			case 8:
-				return this.d8.countVisibleTrees(taskNum);
-			}
+			return d.getResult(taskNum);
+			
 		} catch (Exception e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();

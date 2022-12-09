@@ -1,6 +1,6 @@
 package day07;
 
-public class File {
+class File {
 
 	private String name;
 	private String type;

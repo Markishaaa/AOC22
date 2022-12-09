@@ -3,7 +3,7 @@ package day07;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Directory {
+class Directory {
 
 	private String name;
 	private List<Directory> directories;

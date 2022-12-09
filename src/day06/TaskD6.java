@@ -3,7 +3,9 @@ package day06;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TaskD6 {
+import utils.Task;
+
+public class TaskD6 implements Task {
 
 	private int i = 0;
 
@@ -24,12 +26,26 @@ public class TaskD6 {
 			checkPackets(index + 1, chars, charNum);
 	}
 	
-	public int findIndex(String line, int task) {
+	public void findIndex(String line, int charNum) {
 		char[] chars =  line.trim().toCharArray();
-		int charNum = task == 1 ? 4 : 14;
 		
 		checkPackets(0, chars, charNum);
 		
+		return;
+	}
+	
+	@Override
+	public void task1(String line) {
+		findIndex(line, 4);
+	}
+
+	@Override
+	public void task2(String line) {
+		findIndex(line, 14);
+	}
+
+	@Override
+	public Object getResult(int task) {
 		return i;
 	}
 

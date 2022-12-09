@@ -5,7 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TaskD2 {
+import utils.Task;
+
+public class TaskD2 implements Task {
 
 	private int score = 0;
 
@@ -30,18 +32,21 @@ public class TaskD2 {
 		}
 	}
 
-	public void taskOne(String line) {
+	@Override
+	public void task1(String line) {
 		score += (int) line.charAt(2) - 87;
 		score += dictionary.get(line);
 	}
 
-	public void taskTwo(String line) {
+	@Override
+	public void task2(String line) {
 		String s = (String) dictionary.keySet().toArray()[strats.indexOf(line)];
 
 		score += ((int) s.charAt(2) - 87) + dictionary.get(s);
 	}
 
-	public int getScore() {
+	@Override
+	public Object getResult(int task) {
 		return score;
 	}
 

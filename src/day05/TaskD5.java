@@ -5,7 +5,9 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TaskD5 {
+import utils.Task;
+
+public class TaskD5 implements Task {
 
 	private Map<Integer, Deque<String>> crates;
 	private final int crateWidth = 4;
@@ -69,7 +71,19 @@ public class TaskD5 {
 		crates.get(to).addAll(remove);
 	}
 
-	public String getTopCrates() {
+	@Override
+	public void task1(String line) {
+		moveCrates(line, 1);
+	}
+
+	@Override
+	public void task2(String line) {
+		moveCrates(line, 2);
+	}
+
+	// Gets all the crates on top of the stacks
+	@Override
+	public Object getResult(int task) {
 		String tops = "";
 		for (int i = 1; i <= crates.size(); i++) {
 			tops += crates.get(i).getLast();

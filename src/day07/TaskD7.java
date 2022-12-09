@@ -3,7 +3,9 @@ package day07;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskD7 {
+import utils.Task;
+
+public class TaskD7 implements Task {
 
 	private List<Directory> directories = new ArrayList<>();
 	private int currentDirectoryIndex;
@@ -29,11 +31,11 @@ public class TaskD7 {
 				totalSizes += d1.getSize();
 //			System.out.println(d);
 			int size = d.getSize();
-//			if (size <= maxSize) {
+			if (size <= maxSize) {
 				System.out.println(d.getName() + ": " + size);
 				
 				totalSizes += size;
-//			}
+			}
 		}
 		
 		return totalSizes;
@@ -92,6 +94,21 @@ public class TaskD7 {
 
 			directories.get(currentDirectoryIndex).getFiles().add(f);
 		}
+	}
+
+	@Override
+	public void task1(String line) {
+		isCommand(line);
+	}
+
+	@Override
+	public void task2(String line) {
+		
+	}
+
+	@Override
+	public Object getResult(int task) {
+		return null;
 	}
 
 }
