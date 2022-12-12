@@ -8,44 +8,24 @@ class Directory {
 	private String name;
 	private List<Directory> directories;
 	private List<File> files;
-	private int size;
+	private Directory parent;
 
 	public Directory(String name) {
 		this.name = name;
 		this.files = new ArrayList<>();
 		this.directories = new ArrayList<>();
 	}
-
-	public int findByName(String name) {
+	
+	public Directory findByName(String name) {
 		for (int i = 0; i < directories.size(); i++) {
 			if (directories.get(i).getName().equals(name)) {
-				return i;
+				return directories.get(i);
 			}
 		}
 
-		return -1;
+		return null;
 	}
-
-	public int getSize() {
-		if (!files.isEmpty()) {
-			for (File f : files) {
-				size += f.getSize();
-			}
-		}
-
-		if (!directories.isEmpty()) {
-			for (Directory d : directories) {
-				if (!d.files.isEmpty()) {
-					for (File f : d.files) {
-						size += f.getSize();
-					}
-				}
-			}
-		}
-
-		return size;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -62,9 +42,34 @@ class Directory {
 		this.directories = directories;
 	}
 
-	@Override
-	public String toString() {
-		return "Directory [name=" + name + ", directories=" + directories + ", files=" + files + "]";
+	public Directory getParent() {
+		return parent;
 	}
 
+	public void setParent(Directory parent) {
+		this.parent = parent;
+	}
+	
+	public int getSize() {
+		int sum = 0;
+		for (File f : files) {
+			sum += f.getSize();
+		}
+		
+		for (Directory d : directories) {
+			sum += d.getSize();
+		}
+		
+		return sum;
+	}
+
+	@Override
+	public String toString() {
+		String s = "- " + name + " ( " + files + " ) = " + getSize();
+		for (Directory d : directories) {
+			s += "\n" + d;
+		}
+		return s;
+	}
+	
 }

@@ -1,113 +1,109 @@
 package day07;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import utils.Task;
 
 public class TaskD7 implements Task {
 
-	private List<Directory> directories = new ArrayList<>();
-	private int currentDirectoryIndex;
-	
-	private int totalSizes = 0;
-	private final int maxSize = 100000;
+	private Directory root;
+	private Directory current;
+	private boolean isLs = false;
 
-	private void fillDirectories() {
-		for (int i = directories.size() - 1; i >= 0; i--) {
-			for (Directory d : directories) {
-				int id = d.findByName(directories.get(i).getName());
-				if (id >= 0) {
-					d.getDirectories().set(id, directories.get(i));
-				}
-			}
+	private final int maxSize = 100_000;
+	private int sumOfSmallest = 0;
+
+	private final int maxDiskSpace = 70_000_000;
+	private final int minUpdateSpace = 30_000_000;
+
+	private int getSumOfSizes(Directory dir) {
+		int size = dir.getSize();
+
+		if (size < maxSize)
+			sumOfSmallest += size;
+
+		for (Directory d : dir.getDirectories()) {
+			getSumOfSizes(d);
 		}
+
+		return sumOfSmallest;
 	}
 
-	public int sizes() {
-		fillDirectories();
-		for (Directory d : directories) {
-			for (Directory d1 : d.getDirectories())
-				totalSizes += d1.getSize();
-			int size = d.getSize();
-			if (size <= maxSize) {
-				System.out.println(d.getName() + ": " + size);
-				
-				totalSizes += size;
+	private int min = Integer.MAX_VALUE;
+	private int getSmallest(Directory dir, int freeSpace) {
+		int size = dir.getSize();
+		
+		if (size + freeSpace >= minUpdateSpace) {
+			if (min > size) {
+				min = size;
 			}
+		}
+
+		for (Directory d : dir.getDirectories()) {
+			getSmallest(d, freeSpace);
 		}
 		
-		return totalSizes;
+		return min;
 	}
 
-	public void isCommand(String l) {
-		if (l.contains("$ cd")) {
-			executeCommand(l);
-		} else {
-			list(l);
-		}
-	}
+	private void check(String line) {
+		if (line.contains("$ cd")) {
+			isLs = false;
 
-	private void executeCommand(String l) {
-		String command = l.substring(2);
-
-		if (command.contains("cd")) {
-
-			String dirName = command.substring(3);
-			if (!dirName.equals("..")) {
-				Directory d = new Directory(dirName);
-				directories.add(d);
-
-				currentDirectoryIndex = directories.size() - 1;
+			String dirName = line.substring(5);
+			if (dirName.equals("/")) {
+				root = new Directory(dirName);
+				root.setParent(null);
+				current = root;
+			} else if (dirName.equals("..")) {
+				current = current.getParent();
 			} else {
-				currentDirectoryIndex -= 1;
+				current = current.findByName(dirName);
 			}
-
+		} else if (line.equals("$ ls")) {
+			isLs = true;
+			return;
 		}
+
+		if (isLs)
+			list(line);
 	}
 
-	private void list(String l) {
-		if (l.contains("$"))
-			return;
-
-		if (l.substring(0, 3).equals("dir")) {
-			String dirName = l.substring(4);
+	private void list(String line) {
+		if (line.substring(0, 3).equals("dir")) {
+			String dirName = line.substring(4);
 			Directory d = new Directory(dirName);
-			directories.get(currentDirectoryIndex).getDirectories().add(d);
+			d.setParent(current);
+			current.getDirectories().add(d);
 		} else {
-			String[] data = l.split(" ");
-			int size = Integer.parseInt(data[0]);
-
-			String type = "";
-			if (data[1].contains(".")) {
-				String[] data1 = data[1].split("\\.");
-				type = data1[1];
-			}
-			String fileName = data[1];
-
+			int size = Integer.parseInt(line.split(" ")[0]);
+			String[] file = line.split(" ")[1].split("\\.");
 			File f;
-			if (type.isEmpty())
-				f = new File(fileName, size);
+			if (file.length == 1)
+				f = new File(file[0], size);
 			else
-				f = new File(fileName, type, size);
-
-			directories.get(currentDirectoryIndex).getFiles().add(f);
+				f = new File(file[0] + "." + file[1], file[1], size);
+			current.getFiles().add(f);
 		}
 	}
 
 	@Override
 	public void task1(String line) {
-		isCommand(line);
+		check(line);
 	}
 
 	@Override
 	public void task2(String line) {
-		
+		check(line);
 	}
 
 	@Override
 	public Object getResult(int task) {
-		return null;
+//		System.out.println(root);
+		if (task == 1)
+			return getSumOfSizes(root);
+
+		int space = maxDiskSpace - root.getSize();
+		
+		return getSmallest(root, space);
 	}
 
 }

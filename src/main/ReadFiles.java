@@ -9,7 +9,7 @@ import utils.Task;
 public class ReadFiles {
 
 	private static boolean test = false;
-	private static int dayNum = 8;
+	private static int dayNum = 7;
 	private static int taskNum = 2;
 	
 	private String file;
@@ -30,7 +30,7 @@ public class ReadFiles {
 		try {
 			File myObj = new File(file);
 			Scanner myReader = new Scanner(myObj);
-
+			
 			while (myReader.hasNextLine()) {
 				String line = myReader.nextLine();
 
