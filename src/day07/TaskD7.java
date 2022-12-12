@@ -29,7 +29,6 @@ public class TaskD7 implements Task {
 		for (Directory d : directories) {
 			for (Directory d1 : d.getDirectories())
 				totalSizes += d1.getSize();
-//			System.out.println(d);
 			int size = d.getSize();
 			if (size <= maxSize) {
 				System.out.println(d.getName() + ": " + size);

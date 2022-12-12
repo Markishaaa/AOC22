@@ -28,3 +28,4 @@ local.properties
 .idea/
 
 src/utils/TestClass.java
+res/input-test.txt
