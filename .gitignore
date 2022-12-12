@@ -26,3 +26,5 @@ local.properties
 
 ### idea intellij ###
 .idea/
+
+src/utils/TestClass.java
