@@ -21,7 +21,7 @@ public class TaskD9 implements Task {
 			rope1[i] = new Position();
 
 		this.tails = new ArrayList<>();
-//		 starting position
+		// starting position
 //		this.tails.add(rope1[1].x + "," + rope1[1].y);
 	}
 
@@ -57,7 +57,7 @@ public class TaskD9 implements Task {
 			}
 		}
 	}
-
+	
 	private void upper(int i, Position[] rope) {
 		if (rope[i].x < rope[i - 1].x)
 			rope[i].x++;

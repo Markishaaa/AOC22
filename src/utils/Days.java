@@ -10,6 +10,7 @@ import day07.TaskD7;
 import day08.TaskD8;
 import day09.TaskD9;
 import day10.TaskD10;
+import day11.TaskD11;
 
 public enum Days {
 
@@ -71,6 +72,12 @@ public enum Days {
 		@Override
 		public Task createTask() {
 			return new TaskD10();
+		}
+	},
+	DAY11 {
+		@Override
+		public Task createTask() {
+			return new TaskD11();
 		}
 	};
 
