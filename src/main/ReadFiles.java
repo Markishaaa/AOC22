@@ -9,8 +9,8 @@ import utils.Task;
 public class ReadFiles {
 
 	private static boolean test = false;
-	private static int dayNum = 7;
-	private static int taskNum = 2;
+	private static int dayNum = 9;
+	private static int taskNum = 1;
 	
 	private String file;
 
