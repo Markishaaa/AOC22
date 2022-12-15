@@ -12,13 +12,13 @@ public class TaskD11 implements Task {
 	private List<Monkey> monkeys = new ArrayList<>();
 	private List<String> lines = new ArrayList<>();
 
-	private int numOfRounds = 20;
+	private int globalModulo = 1;
 
 	private void loadMonkey() {
-		List<Integer> items = new ArrayList<>();
+		List<Long> items = new ArrayList<>();
 		String[] itemsArr = lines.get(1).substring(18).split(",");
 		for (int i = 0; i < itemsArr.length; i++) {
-			items.add(Integer.parseInt(itemsArr[i].trim()));
+			items.add(Long.parseLong(itemsArr[i].trim()));
 		}
 
 		String operation = lines.get(2).substring(23, 24);
@@ -43,17 +43,22 @@ public class TaskD11 implements Task {
 		lines.clear();
 	}
 
-	private void round() {
+	private void round(int task) {
 		for (Monkey monkey : monkeys) {
-			for (int item : monkey.getItems()) {
+			for (long item : monkey.getItems()) {
 
-				int inspectItem;
-				if (monkey.isOld()) {
-					inspectItem = item;
-				} else {
+				long inspectItem;
+				if (monkey.isOld())
+					inspectItem = item; 
+				else
 					inspectItem = monkey.getWorryLevel();
-				}
-				int worryLvl = monkey.inspect(item, inspectItem);
+				
+				long worryLvl = monkey.inspect(item, inspectItem);
+				
+				if (task == 2) 
+					worryLvl %= globalModulo;
+				else
+					worryLvl /= 3;	
 
 				int monkeyI = monkey.test(item, worryLvl);
 
@@ -78,21 +83,29 @@ public class TaskD11 implements Task {
 
 	@Override
 	public void task2(String line) {
-
+		task1(line);
 	}
 
 	@Override
 	public Object getResult(int task) {
-		for (int i = 0; i < numOfRounds; i++) {
-			round();
+		int numOfRounds = 0;
+		if (task == 1) {
+			numOfRounds = 20;
+		} else {
+			numOfRounds = 10_000;
+			globalModulo = monkeys.stream().map(m -> m.getTestNumber()).reduce(1, (a, b) -> a * b);
 		}
-		
+
+		for (int i = 0; i < numOfRounds; i++) {
+			round(task);
+		}
+
 		monkeys.stream().map(Monkey::getInspectCount).forEach(System.out::println);
-		
+
 		List<Integer> mostInspected = monkeys.stream().map(Monkey::getInspectCount).sorted(Comparator.reverseOrder())
 				.limit(2).collect(Collectors.toList());
 
-		return mostInspected.get(0) * mostInspected.get(1);
+		return (long) mostInspected.get(0) * mostInspected.get(1);
 	}
 
 }

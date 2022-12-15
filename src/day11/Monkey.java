@@ -5,7 +5,7 @@ import java.util.List;
 
 class Monkey {
 
-	private List<Integer> items;
+	private List<Long> items;
 	private String operation;
 	private int worryLevel;
 	private boolean old;
@@ -14,7 +14,7 @@ class Monkey {
 	
 	private int inspectCount;
 
-	public Monkey(List<Integer> items, int worryLevel, int testNumber, int[] monkeyIs, String operation,
+	public Monkey(List<Long> items, int worryLevel, int testNumber, int[] monkeyIs, String operation,
 			boolean old) {
 		super();
 		this.items = items;
@@ -27,25 +27,25 @@ class Monkey {
 		this.inspectCount = 0;
 	}
 
-	public int inspect(int item, int worryLvl) {
+	public long inspect(long item, long worryLvl) {
 		increaseInspectCount();
-		int lvl;
+		long lvl;
 		if (operation.equals("*"))
 			lvl = item * worryLvl;
 		else
 			lvl = item + worryLvl;
 		
-		return lvl / 3;
+		return lvl;
 	}
 
-	public int test(int item, int lvl) {
+	public int test(long item, long lvl) {
 		if (lvl % testNumber == 0)
 			return monkeyIs[0];
 
 		return monkeyIs[1];
 	}
 
-	public List<Integer> getItems() {
+	public List<Long> getItems() {
 		return items;
 	}
 

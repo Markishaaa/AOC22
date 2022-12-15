@@ -10,7 +10,7 @@ public class ReadFiles {
 
 	private static boolean test = false;
 	private static int dayNum = 11;
-	private static int taskNum = 1;
+	private static int taskNum = 2;
 	
 	private String file;
 
